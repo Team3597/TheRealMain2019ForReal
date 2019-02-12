@@ -44,6 +44,11 @@ public class Cargo {
     }
 
     public static void armDown(float pSpeed) {
-        cargoArm.set(pSpeed);
+        cargoArm.set(-pSpeed);
+    }
+
+    public static void stop() {
+        Robot.cargo.intake(0f);
+        Robot.cargo.armUp(0f);
     }
 }

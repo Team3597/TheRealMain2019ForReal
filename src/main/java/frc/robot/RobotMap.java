@@ -42,5 +42,7 @@ public class RobotMap {
     public static final boolean HATCH_GRIPPER_INVERTED = false;
 
     //Ramp
-    public static final int RAMP_SOLENOID_PORT = 3;
+    public static final int RAMP_MOTOR_PORT = 3;
+
+    public static final boolean RAMP_INVERTED = false;
 }

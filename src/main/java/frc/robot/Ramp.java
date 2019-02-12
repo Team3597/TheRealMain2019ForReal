@@ -8,24 +8,30 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Spark;
 
 /**
  * Add your docs here.
  */
 public class Ramp {
     
-    private static Relay rampSolenoid;
+    private static Spark rampMotor;
 
     public Ramp() {
-        rampSolenoid = new Relay(RobotMap.RAMP_SOLENOID_PORT);
+        rampMotor = new Spark(RobotMap.RAMP_MOTOR_PORT);
+
+        rampMotor.setInverted(RobotMap.RAMP_INVERTED);
     }
 
-    public static void rampSolenoidOn() {
-        rampSolenoid.set(Relay.Value.kOn);
+    public static void rampMotorForward(float pSpeed) {
+        rampMotor.set(pSpeed);
     }
 
-    public static void rampSolenoidOff() {
-        rampSolenoid.set(Relay.Value.kOff);
+    public static void rampMotorReverse(float pSpeed) {
+        rampMotor.set(-pSpeed);
+    }
+
+    public static void stop() {
+        rampMotor.set(0f);
     }
 }

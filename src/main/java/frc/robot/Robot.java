@@ -28,6 +28,7 @@ public class Robot extends TimedRobot {
   public static DriveTrain driveTrain = new DriveTrain();
   public static Cargo cargo = new Cargo();
   public static Hatch hatch = new Hatch();
+  public static Ramp ramp = new Ramp();
 
   @Override
   public void robotInit() {
@@ -76,37 +77,40 @@ public class Robot extends TimedRobot {
 
     switch (button) {
       case 1: //A button
-        //hatch.gripOpen(1f); <- Example 
+        hatch.gripOpen(1f);
         break;
       case 2: //B button
-        //hatch.gripClose(1f); <- Example
+        hatch.gripClose(1f);
         break;
       case 3: //X button
-
+        hatch.armUp(1f);
         break;
       case 4: //Y button
-
+        hatch.armDown(1f);
         break;
       case 5: //LB button
-
+        cargo.intake(1f);
         break;
       case 6: //RB button
-
+        cargo.shoot(1f);
         break;
       case 7: //Back button
-
+        //cargo.armUp(1f);
+        ramp.rampMotorForward(1f);
         break;
       case 8: //Start button
-
+        //cargo.armDown(1f);
+        ramp.rampMotorReverse(1f);
         break;
       case 9: //Left Stick button
-
         break;
       case 10: //Right Stick button
-
         break;
       default:
         driveTrain.arcadeDriveWithJoystick();
+        cargo.stop();
+        hatch.stop();
+        ramp.stop();
     }
   }
 

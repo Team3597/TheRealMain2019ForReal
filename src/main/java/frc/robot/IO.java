@@ -21,7 +21,6 @@ public class IO {
     public static final int RX_STICK_AXIS = 4;
     public static final int RY_STICK_AXIS = 5;
 
-    //These may or may not be right
     public static final int A_BUTTON = 1;
     public static final int B_BUTTON = 2;
     public static final int X_BUTTON = 3;
@@ -36,6 +35,6 @@ public class IO {
     public static Joystick driveJoystick;
 
     public IO() {
-       driveJoystick = new Joystick(DRIVE_JOYSTICK_PORT);
+        driveJoystick = new Joystick(DRIVE_JOYSTICK_PORT);
     }
 }

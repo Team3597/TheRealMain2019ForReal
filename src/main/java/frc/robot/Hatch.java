@@ -27,20 +27,25 @@ public class Hatch {
 
     }
 
-    public void armUp(float pSpeed) {
+    public static void armUp(float pSpeed) {
         hatchArm.set(pSpeed);
     }
 
-    public void armDown(float pSpeed) {
+    public static void armDown(float pSpeed) {
         hatchArm.set(-pSpeed);
     }
 
-    public void gripOpen(float pSpeed) {
+    public static void gripOpen(float pSpeed) {
         hatchGrip.set(pSpeed);
     }
 
-    public void gripClose(float pSpeed) {
+    public static void gripClose(float pSpeed) {
         hatchGrip.set(-pSpeed);
+    }
+
+    public static void stop() {
+        Robot.hatch.armUp(0f);
+        Robot.hatch.gripOpen(0f);
     }
 
 }
