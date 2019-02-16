@@ -35,10 +35,10 @@ public DriveTrain() {
     bLeftDrive.setInverted(RobotMap.BL_DRIVE_INVERTED);
     fLeftDrive.setInverted(RobotMap.FL_DRIVE_INVERTED);
 
-    bRightDrive.follow(fRightDrive);
-    bLeftDrive.follow(fLeftDrive);
+    fRightDrive.follow(bRightDrive);
+    fLeftDrive.follow(bLeftDrive);
 
-    driveTrain = new DifferentialDrive(fLeftDrive, fRightDrive);
+    driveTrain = new DifferentialDrive(bLeftDrive, bRightDrive);
 
 }
 
@@ -51,15 +51,15 @@ public static void driveTank(float pLeftSpeed, float pRightSpeed) {
 }
 
 public static void arcadeDriveWithJoystick() {
-  double forward = -Robot.io.driveJoystick.getRawAxis(IO.LY_STICK_AXIS);
-  double turn = Robot.io.driveJoystick.getRawAxis(IO.RX_STICK_AXIS);
+  double forward = -Robot.io.driveJoystick.getRawAxis(IO.LY_STICK_AXIS) / 1.25f;
+  double turn = Robot.io.driveJoystick.getRawAxis(IO.RX_STICK_AXIS) / 1.25f;
 
   driveTrain.arcadeDrive(turn, forward);
 }
 
 public static void tankDriveWithJoystick() {
-  double forward = -Robot.io.driveJoystick.getRawAxis(IO.LY_STICK_AXIS);
-  double turn = Robot.io.driveJoystick.getRawAxis(IO.RX_STICK_AXIS);
+  double forward = -Robot.io.driveJoystick.getRawAxis(IO.LY_STICK_AXIS) / 1.25f;
+  double turn = Robot.io.driveJoystick.getRawAxis(IO.RX_STICK_AXIS) / 1.25f;
 
   driveTrain.tankDrive(turn, forward);
 }

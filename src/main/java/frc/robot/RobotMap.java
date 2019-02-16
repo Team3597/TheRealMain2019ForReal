@@ -30,7 +30,7 @@ public class RobotMap {
     public static final int L_INTAKE_MOTOR_PORT = 6;
     public static final int CARGO_ARM_MOTOR_PORT = 0;
 
-    public static final boolean R_INTAKE_INVERTED = false;
+    public static final boolean R_INTAKE_INVERTED = true;
     public static final boolean L_INTAKE_INVERTED = true;
     public static final boolean CARGO_ARM_INVERTED = false;
 

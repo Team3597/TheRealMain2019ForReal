@@ -123,10 +123,10 @@ public class IO {
                 Robot.hatch.armDown(0.35f);
                 break;
             case IO.LB_BUTTON:
-                Robot.cargo.intake(0.4f);
+                Robot.cargo.intake(0.75f);
                 break;
             case IO.RB_BUTTON:
-                Robot.cargo.shoot(0.4f);
+                Robot.cargo.shoot(1f);
                 break;
             case IO.BACK_BUTTON:
                 Robot.cargo.armUp(0.4f);
