@@ -51,4 +51,5 @@ public class Cargo {
         Robot.cargo.intake(0f);
         Robot.cargo.armUp(0f);
     }
+    
 }

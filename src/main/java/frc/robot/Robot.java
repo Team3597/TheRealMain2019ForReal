@@ -51,67 +51,11 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    int button = 0;
+    io.driveButtonsPressed();
+    io.shootButtonsPressed();
 
-    if(io.driveJoystick.getRawButton(IO.A_BUTTON)) {
-      button = 1;
-    } else if(io.driveJoystick.getRawButton(IO.B_BUTTON)) {
-      button = 2;
-    } else if(io.driveJoystick.getRawButton(IO.X_BUTTON)) {
-      button = 3;
-    } else if(io.driveJoystick.getRawButton(IO.Y_BUTTON)) {
-      button = 4;
-    } else if (io.driveJoystick.getRawButton(IO.LB_BUTTON)) {
-      button = 5;
-    } else if (io.driveJoystick.getRawButton(IO.RB_BUTTON)) {
-      button = 6;
-    } else if (io.driveJoystick.getRawButton(IO.BACK_BUTTON)) {
-      button = 7;
-    } else if (io.driveJoystick.getRawButton(IO.START_BUTTON)) {
-      button = 8;
-    } else if (io.driveJoystick.getRawButton(IO.L_STICK_BUTTON)) {
-      button = 9;
-    } else if (io.driveJoystick.getRawButton(IO.R_STICK_BUTTON)) {
-      button = 10;
-    }
-
-    switch (button) {
-      case 1: //A button
-        hatch.gripOpen(1f);
-        break;
-      case 2: //B button
-        hatch.gripClose(1f);
-        break;
-      case 3: //X button
-        hatch.armUp(1f);
-        break;
-      case 4: //Y button
-        hatch.armDown(1f);
-        break;
-      case 5: //LB button
-        cargo.intake(1f);
-        break;
-      case 6: //RB button
-        cargo.shoot(1f);
-        break;
-      case 7: //Back button
-        //cargo.armUp(1f);
-        ramp.rampMotorForward(1f);
-        break;
-      case 8: //Start button
-        //cargo.armDown(1f);
-        ramp.rampMotorReverse(1f);
-        break;
-      case 9: //Left Stick button
-        break;
-      case 10: //Right Stick button
-        break;
-      default:
-        driveTrain.arcadeDriveWithJoystick();
-        cargo.stop();
-        hatch.stop();
-        ramp.stop();
-    }
+    driveTrain.arcadeDriveWithJoystick();
+    
   }
 
   @Override
