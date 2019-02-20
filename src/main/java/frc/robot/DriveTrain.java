@@ -23,27 +23,38 @@ public class DriveTrain {
   private static WPI_TalonSRX bLeftDrive;
   private static WPI_TalonSRX fLeftDrive;
 
+  private static float turnSpeed;
+  private static final float DEFAULT_TURN_SPEED = 0.75f;
+  private static final float SLOW_TURN_SPEED = 0.5f;
+
+  public static boolean drive;
+  private static boolean toggleTurnSpeed = true;
+
 public DriveTrain() {
 
-    fRightDrive = new WPI_TalonSRX(RobotMap.FR_DRIVE_MOTOR_PORT);
-    bRightDrive = new WPI_TalonSRX(RobotMap.BR_DRIVE_MOTOR_PORT);
-    fLeftDrive = new WPI_TalonSRX(RobotMap.FL_DRIVE_MOTOR_PORT);
-    bLeftDrive = new WPI_TalonSRX(RobotMap.BL_DRIVE_MOTOR_PORT);
+  fRightDrive = new WPI_TalonSRX(RobotMap.FR_DRIVE_MOTOR_PORT);
+  bRightDrive = new WPI_TalonSRX(RobotMap.BR_DRIVE_MOTOR_PORT);
+  fLeftDrive = new WPI_TalonSRX(RobotMap.FL_DRIVE_MOTOR_PORT);
+  bLeftDrive = new WPI_TalonSRX(RobotMap.BL_DRIVE_MOTOR_PORT);
 
-    bRightDrive.setInverted(RobotMap.BR_DRIVE_INVERTED);
-    fRightDrive.setInverted(RobotMap.FR_DRIVE_INVERTED);
-    bLeftDrive.setInverted(RobotMap.BL_DRIVE_INVERTED);
-    fLeftDrive.setInverted(RobotMap.FL_DRIVE_INVERTED);
+  bRightDrive.setInverted(RobotMap.BR_DRIVE_INVERTED);
+  fRightDrive.setInverted(RobotMap.FR_DRIVE_INVERTED);
+  bLeftDrive.setInverted(RobotMap.BL_DRIVE_INVERTED);
+  fLeftDrive.setInverted(RobotMap.FL_DRIVE_INVERTED);
 
-    fRightDrive.follow(bRightDrive);
-    fLeftDrive.follow(bLeftDrive);
+  fRightDrive.follow(bRightDrive);
+  fLeftDrive.follow(bLeftDrive);
 
-    driveTrain = new DifferentialDrive(bLeftDrive, bRightDrive);
+  driveTrain = new DifferentialDrive(bLeftDrive, bRightDrive);
+
+  drive = true;
+
+  turnSpeed = DEFAULT_TURN_SPEED;
 
 }
 
-public static void driveArcade(float pSpeed, float pRotation) {
-  driveTrain.arcadeDrive(pSpeed, pRotation);
+public static void driveArcade(float pRotation, float pSpeed) {
+  driveTrain.arcadeDrive(pRotation, pSpeed);
 }
 
 public static void driveTank(float pLeftSpeed, float pRightSpeed) {
@@ -51,17 +62,21 @@ public static void driveTank(float pLeftSpeed, float pRightSpeed) {
 }
 
 public static void arcadeDriveWithJoystick() {
-  double forward = -Robot.io.driveJoystick.getRawAxis(IO.LY_STICK_AXIS) / 1.25f;
-  double turn = Robot.io.driveJoystick.getRawAxis(IO.RX_STICK_AXIS) / 1.25f;
+  if(drive) {
+    float forward = (float) (-Robot.io.driveJoystick.getRawAxis(IO.LY_STICK_AXIS) * 0.75f);
+    float turn = (float) (Robot.io.driveJoystick.getRawAxis(IO.RX_STICK_AXIS) * turnSpeed);
 
-  driveTrain.arcadeDrive(turn, forward);
+    driveArcade(turn, forward);
+  }
 }
 
 public static void tankDriveWithJoystick() {
-  double forward = -Robot.io.driveJoystick.getRawAxis(IO.LY_STICK_AXIS) / 1.25f;
-  double turn = Robot.io.driveJoystick.getRawAxis(IO.RX_STICK_AXIS) / 1.25f;
+  if(drive) {
+    float forward = (float) (-Robot.io.driveJoystick.getRawAxis(IO.LY_STICK_AXIS) * 0.75f);
+    float turn = (float) (Robot.io.driveJoystick.getRawAxis(IO.RX_STICK_AXIS) * 0.75f);
 
-  driveTrain.tankDrive(turn, forward);
+    driveTank(turn, forward);
+  }
 }
 
 public static int getEncoderValue(WPI_TalonSRX pMotor) {
@@ -76,6 +91,22 @@ public static void resetEncoder(int pArrayLength, WPI_TalonSRX[] pMotors) {
   for(int i = 0; i < pArrayLength - 1; i++) {
     resetEncoder(pMotors[i]);
   }
+}
+
+public static void toggleTurnSpeed() {
+  if(toggleTurnSpeed) {
+    toggleTurnSpeed = false;
+
+    if(turnSpeed == DEFAULT_TURN_SPEED) {
+      turnSpeed = SLOW_TURN_SPEED;
+    } else {
+      turnSpeed = DEFAULT_TURN_SPEED;
+    }
+  }
+}
+
+public static void stop() {
+  toggleTurnSpeed = true;
 }
 
 }

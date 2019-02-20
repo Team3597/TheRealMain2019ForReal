@@ -7,30 +7,22 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 
 /**
  * Add your docs here.
  */
-public class Ramp {
-    
-    private static Spark rampMotor;
+public class Gyro {
 
-    public Ramp() {
-        rampMotor = new Spark(RobotMap.RAMP_MOTOR_PORT);
+    private static ADXRS450_Gyro gyro;
 
-        rampMotor.setInverted(RobotMap.RAMP_INVERTED);
+    public Gyro() {
+        gyro = new ADXRS450_Gyro();
+        gyro.reset();
     }
 
-    public static void rampMotorForward(float pSpeed) {
-        rampMotor.set(pSpeed);
+    public void resetGyro() {
+        gyro.reset();
     }
 
-    public static void rampMotorReverse(float pSpeed) {
-        rampMotor.set(-pSpeed);
-    }
-
-    public static void stop() {
-        rampMotor.set(0f);
-    }
 }

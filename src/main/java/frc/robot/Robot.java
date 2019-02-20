@@ -25,6 +25,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 public class Robot extends TimedRobot {
 
   public static IO io = new IO();
+  public static Gyro gyro = new Gyro();
+  public static LimeLight limeLight = new LimeLight();
   public static DriveTrain driveTrain = new DriveTrain();
   public static Cargo cargo = new Cargo();
   public static Hatch hatch = new Hatch();
@@ -42,6 +44,13 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
 
+    io.driveButtonsPressed();
+    io.shootButtonsPressed();
+
+    if(driveTrain.drive) {
+      driveTrain.arcadeDriveWithJoystick();
+    }
+
   }
 
   @Override
@@ -54,7 +63,9 @@ public class Robot extends TimedRobot {
     io.driveButtonsPressed();
     io.shootButtonsPressed();
 
-    driveTrain.arcadeDriveWithJoystick();
+    if(driveTrain.drive) {
+      driveTrain.arcadeDriveWithJoystick();
+    }
     
   }
 

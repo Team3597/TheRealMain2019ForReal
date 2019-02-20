@@ -22,6 +22,9 @@ public class IO {
     public static final int RX_STICK_AXIS = 4;
     public static final int RY_STICK_AXIS = 5;
 
+    public static final int L_TRIGGER_AXIS = 2;
+    public static final int R_TRIGGER_AXIS = 3;
+
     public static final int A_BUTTON = 1;
     public static final int B_BUTTON = 2;
     public static final int X_BUTTON = 3;
@@ -32,6 +35,8 @@ public class IO {
     public static final int START_BUTTON = 8;
     public static final int L_STICK_BUTTON = 9;
     public static final int R_STICK_BUTTON = 10;
+    public static final int L_TRIGGER_BUTTON = 11;
+    public static final int R_TRIGGER_BUTTON = 12;
 
     public static Joystick driveJoystick;
     public static Joystick shootJoystick;
@@ -63,64 +68,39 @@ public class IO {
             return L_STICK_BUTTON;
         } else if (pJoystick.getRawButton(R_STICK_BUTTON)) {
         return R_STICK_BUTTON;
+        } else if (pJoystick.getRawAxis(L_TRIGGER_AXIS) > 0.1f) {
+        return L_TRIGGER_BUTTON;
+        } else if(pJoystick.getRawAxis(R_TRIGGER_AXIS) > 0.1f) {
+        return R_TRIGGER_BUTTON;
         } else {
             return 0;
         }
         
     } 
 
-    public static void driveButtonsPressed() {
+    public static void driveButtonsPressed() {              //DRIVE CONTROLLER
         switch (buttonPressed(Robot.io.driveJoystick)) {
-            case IO.A_BUTTON: //Left and Right Stick Up
-                Robot.hatch.gripOpen(1f);
-                break;
-            case IO.B_BUTTON: //Left and Right Stick Down
-                Robot.hatch.gripClose(1f);
-                break;
-            case IO.X_BUTTON:
-                Robot.hatch.armUp(0.1f);
-                break;
-            case IO.Y_BUTTON:
-                Robot.hatch.armDown(0.1f);
-                break;
-            case IO.LB_BUTTON:
-                Robot.cargo.intake(0.1f);
-                break;
-            case IO.RB_BUTTON:
-                Robot.cargo.shoot(0.1f);
-                break;
-            case IO.BACK_BUTTON:
-                Robot.cargo.armUp(0.1f);
-                break;
-            case IO.START_BUTTON:
-                Robot.cargo.armDown(0.1f);
-                break;
-            case IO.L_STICK_BUTTON:
-                Robot.ramp.rampMotorForward(0.1f);
-                break;
-            case IO.R_STICK_BUTTON:
-                Robot.ramp.rampMotorReverse(0.1f);
+            case A_BUTTON:
+                DriveTrain.toggleTurnSpeed();
                 break;
             default:
-              Robot.cargo.stop();
-              Robot.hatch.stop();
-              Robot.ramp.stop();
+                Robot.driveTrain.stop();
         }
     }
 
-    public static void shootButtonsPressed() {
+    public static void shootButtonsPressed() {              //SHOOT CONTROLLER
         switch (buttonPressed(Robot.io.shootJoystick)) {
-            case IO.A_BUTTON: //Left and Right Stick Up
-                Robot.hatch.gripOpen(1f);
+            case IO.A_BUTTON:
+                Robot.hatch.gripOpen(0.5f);
                 break;
-            case IO.B_BUTTON: //Left and Right Stick Down
-                Robot.hatch.gripClose(1f);
+            case IO.B_BUTTON:
+                Robot.hatch.gripClose(0.5f);
                 break;
             case IO.X_BUTTON:
                 Robot.hatch.armUp(0.35f);
                 break;
             case IO.Y_BUTTON:
-                Robot.hatch.armDown(0.35f);
+                Robot.hatch.armDown(0.25f);
                 break;
             case IO.LB_BUTTON:
                 Robot.cargo.intake(0.75f);
@@ -128,17 +108,20 @@ public class IO {
             case IO.RB_BUTTON:
                 Robot.cargo.shoot(1f);
                 break;
+            case IO.R_TRIGGER_BUTTON:
+                Robot.cargo.shoot(0.5f);
+                break;
+            case IO.L_STICK_BUTTON:
+                Robot.ramp.rampMotorForward(0.4f);
+                break;
+            case IO.R_STICK_BUTTON:
+                Robot.ramp.rampMotorReverse(0.4f);
+                break;
             case IO.BACK_BUTTON:
                 Robot.cargo.armUp(0.4f);
                 break;
             case IO.START_BUTTON:
                 Robot.cargo.armDown(0.4f);
-                break;
-            case IO.L_STICK_BUTTON:
-                Robot.ramp.rampMotorForward(0.5f);
-                break;
-            case IO.R_STICK_BUTTON:
-                Robot.ramp.rampMotorReverse(0.5f);
                 break;
             default:
               Robot.cargo.stop();
