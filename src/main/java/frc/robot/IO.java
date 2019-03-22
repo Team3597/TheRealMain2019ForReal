@@ -25,6 +25,8 @@ public class IO {
     public static final int L_TRIGGER_AXIS = 2;
     public static final int R_TRIGGER_AXIS = 3;
 
+    public static final int PAD = 16;
+
     public static final int A_BUTTON = 1;
     public static final int B_BUTTON = 2;
     public static final int X_BUTTON = 3;
@@ -40,6 +42,8 @@ public class IO {
 
     public static Joystick driveJoystick;
     public static Joystick shootJoystick;
+
+
 
     public IO() {
         driveJoystick = new Joystick(DRIVE_JOYSTICK_PORT);
@@ -72,10 +76,11 @@ public class IO {
         return L_TRIGGER_BUTTON;
         } else if(pJoystick.getRawAxis(R_TRIGGER_AXIS) > 0.1f) {
         return R_TRIGGER_BUTTON;
-        } else {
+        } else if(pJoystick.getPOV() > -1){
+            return PAD;
+        } else{
             return 0;
-        }
-        
+        } 
     } 
 
     public static void driveButtonsPressed() {              //DRIVE CONTROLLER
@@ -122,6 +127,9 @@ public class IO {
                 break;
             case IO.START_BUTTON:
                 Robot.cargo.armDown(0.4f);
+                break;
+            case IO.PAD:
+                Robot.cargo.autoControl(Robot.io.shootJoystick.getPOV());
                 break;
             default:
               Robot.cargo.stop();

@@ -63,6 +63,8 @@ public class Robot extends TimedRobot {
     io.driveButtonsPressed();
     io.shootButtonsPressed();
 
+    cargo.driveSetpoint();
+
     if(driveTrain.drive) {
       driveTrain.arcadeDriveWithJoystick();
     }

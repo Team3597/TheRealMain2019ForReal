@@ -11,11 +11,17 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Spark;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+
 public class Cargo {
 
     private static WPI_TalonSRX rIntakeMotor;
     private static WPI_TalonSRX lIntakeMotor;
     private static Spark cargoArm;
+
+    float potSet;
+
+    AnalogPotentiometer pot = new AnalogPotentiometer(0);
 
     public Cargo() {
 
@@ -29,6 +35,9 @@ public class Cargo {
 
         cargoArm = new Spark(RobotMap.CARGO_ARM_MOTOR_PORT);
         cargoArm.setInverted(RobotMap.CARGO_ARM_INVERTED);
+
+        potSet = -1;
+
     }
 
     public static void intake(float pSpeed) {
@@ -50,6 +59,33 @@ public class Cargo {
     public static void stop() {
         Robot.cargo.intake(0f);
         Robot.cargo.armUp(0f);
+    }
+
+    public void autoControl(float hatData) {
+        switch((int)hatData){
+            case 0:
+                potSet = 0.48f;
+                break;
+            case 90:
+                potSet = 0.55f;
+                break;
+            case 180:
+                potSet = 0.76f;
+                break;
+            case 270:
+                potSet = -1;
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    public void driveSetpoint() {
+        if(Robot.cargo.potSet > -1){
+            cargoArm.set((potSet-pot.get())*3);
+        }
+        System.out.println(pot.get());
     }
     
 }
