@@ -23,12 +23,15 @@ public class DriveTrain {
   private static WPI_TalonSRX bLeftDrive;
   private static WPI_TalonSRX fLeftDrive;
 
-  private static float turnSpeed;
-  private static final float DEFAULT_TURN_SPEED = 0.75f;
-  private static final float SLOW_TURN_SPEED = 0.5f;
+  private static float speed;
+  private static final float DEFAULT_SPEED = 0.9f;
+  private static final float SLOW_SPEED = 0.5f;
 
   public static boolean drive;
-  private static boolean toggleTurnSpeed = true;
+  private static boolean toggleSlowSpeed = true;
+
+  private static boolean toggleInverse = true;
+  private static float inverted = 1;
 
 public DriveTrain() {
 
@@ -49,7 +52,9 @@ public DriveTrain() {
 
   drive = true;
 
-  turnSpeed = DEFAULT_TURN_SPEED;
+  speed = DEFAULT_SPEED;
+
+  enableRamping();
 
 }
 
@@ -61,10 +66,17 @@ public static void driveTank(float pLeftSpeed, float pRightSpeed) {
   driveTrain.tankDrive(pLeftSpeed, pRightSpeed);
 }
 
+public void enableRamping() {
+  fRightDrive.configOpenloopRamp(.35,0);
+  fLeftDrive.configOpenloopRamp(.35,0);
+  bRightDrive.configOpenloopRamp(.35,0);
+  bLeftDrive.configOpenloopRamp(.35,0);
+}
+
 public static void arcadeDriveWithJoystick() {
   if(drive) {
-    float forward = (float) (-Robot.io.driveJoystick.getRawAxis(IO.LY_STICK_AXIS) * 0.75f);
-    float turn = (float) (Robot.io.driveJoystick.getRawAxis(IO.RX_STICK_AXIS) * turnSpeed);
+    float forward = (float) (-Robot.io.driveJoystick.getRawAxis(IO.LY_STICK_AXIS) * speed * inverted);
+    float turn = (float) (Robot.io.driveJoystick.getRawAxis(IO.RX_STICK_AXIS) * speed);
 
     driveArcade(turn, forward);
   }
@@ -72,8 +84,8 @@ public static void arcadeDriveWithJoystick() {
 
 public static void tankDriveWithJoystick() {
   if(drive) {
-    float forward = (float) (-Robot.io.driveJoystick.getRawAxis(IO.LY_STICK_AXIS) * 0.75f);
-    float turn = (float) (Robot.io.driveJoystick.getRawAxis(IO.RX_STICK_AXIS) * 0.75f);
+    float forward = (float) (-Robot.io.driveJoystick.getRawAxis(IO.LY_STICK_AXIS) * speed * inverted);
+    float turn = (float) (Robot.io.driveJoystick.getRawAxis(IO.RX_STICK_AXIS) * speed * inverted);
 
     driveTank(turn, forward);
   }
@@ -93,20 +105,34 @@ public static void resetEncoder(int pArrayLength, WPI_TalonSRX[] pMotors) {
   }
 }
 
-public static void toggleTurnSpeed() {
-  if(toggleTurnSpeed) {
-    toggleTurnSpeed = false;
+public static void toggleSlowSpeed() {
+  if(toggleSlowSpeed) {
+    toggleSlowSpeed = false;
 
-    if(turnSpeed == DEFAULT_TURN_SPEED) {
-      turnSpeed = SLOW_TURN_SPEED;
+    if(speed == DEFAULT_SPEED) {
+      speed = SLOW_SPEED;
     } else {
-      turnSpeed = DEFAULT_TURN_SPEED;
+      speed = DEFAULT_SPEED;
+    }
+  }
+}
+
+public static void toggleInverseDrive(){
+  if(toggleInverse){
+    toggleInverse = false;
+
+    if(inverted == 1){
+      inverted = -1;
+    }
+    else{
+      inverted = 1;
     }
   }
 }
 
 public static void stop() {
-  toggleTurnSpeed = true;
+  toggleSlowSpeed = true;
+  toggleInverse = true;
 }
 
 }

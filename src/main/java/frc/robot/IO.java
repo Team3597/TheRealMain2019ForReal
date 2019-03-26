@@ -86,7 +86,10 @@ public class IO {
     public static void driveButtonsPressed() {              //DRIVE CONTROLLER
         switch (buttonPressed(Robot.io.driveJoystick)) {
             case A_BUTTON:
-                DriveTrain.toggleTurnSpeed();
+                DriveTrain.toggleSlowSpeed();
+                break;
+            case B_BUTTON:
+                DriveTrain.toggleInverseDrive();
                 break;
             default:
                 Robot.driveTrain.stop();

@@ -61,8 +61,8 @@ public class Cargo {
         Robot.cargo.armUp(0f);
     }
 
-    public void autoControl(float hatData) {
-        switch((int)hatData){
+    public void autoControl(float pHatData) {
+        switch((int)pHatData){
             case 0:
                 potSet = 0.48f;
                 break;
@@ -84,8 +84,8 @@ public class Cargo {
     public void driveSetpoint() {
         if(Robot.cargo.potSet > -1){
             cargoArm.set((potSet-pot.get())*3);
-        }
-        System.out.println(pot.get());
+        } 
+        // System.out.println(pot.get());
     }
     
 }
