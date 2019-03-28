@@ -64,7 +64,7 @@ public class Cargo {
     public void autoControl(float pHatData) {
         switch((int)pHatData){
             case 0:
-                potSet = 0.48f;
+                potSet = 0.5f;
                 break;
             case 90:
                 potSet = 0.55f;
@@ -83,9 +83,16 @@ public class Cargo {
 
     public void driveSetpoint() {
         if(Robot.cargo.potSet > -1){
-            cargoArm.set((potSet-pot.get())*3);
+            double midSet = (potSet-pot.get())*5;
+            if(midSet > 0.75){
+                midSet = 0.75;
+            }
+            if(midSet < -0.75){
+                midSet = -0.75;
+            }
+            cargoArm.set(midSet);
         } 
-        // System.out.println(pot.get());
+        System.out.println(pot.get());
     }
     
 }
